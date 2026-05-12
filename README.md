@@ -52,6 +52,7 @@ Evaluated with per-class F1 score to account for class imbalance across 10 cell 
 
 ![Confusion matrix](figures/part2_confusion_matrix.png)
 ![F1 scores](figures/part2_f1_scores.png)
+![Feature importance](figures/part2_feature_importance.png)
 
 ---
 
@@ -79,7 +80,8 @@ git clone https://github.com/amishaguptaberk/pbmc-celltype-classification
 cd pbmc-celltype-classification
 pip install -r requirements.txt
 # place labels.csv and processed_counts.csv in data/
-jupyter notebook
+jupyter notebook notebooks/Part1_Autoencoder.ipynb
+jupyter notebook notebooks/Part2_Classification.ipynb
 ```
 
 ---
