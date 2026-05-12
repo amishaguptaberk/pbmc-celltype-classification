@@ -46,13 +46,13 @@ Evaluated with per-class F1 score to account for class imbalance across 10 cell 
 
 **Dimensionality Reduction**
 
-t-SNE gives the clearest cluster separation of the three methods; the autoencoder latent space and PCA show progressively less separation, consistent with their linear and reconstruction-based objectives respectively.
+t-SNE separates the cell types most clearly. PCA and the autoencoder latent space show more overlap — PCA because it's a linear projection, the autoencoder because it optimizes for reconstruction rather than class separability.
 
 ![Comparison](figures/part1_comparison.png)
 
 **Classification**
 
-Random Forest classifier: **85.0% test accuracy** (5-fold CV: 81.6% ± 1.5%) across 10 PBMC cell types. Top features by importance are established marker genes: CD79A (B cells), GNLY/NKG7 (NK/cytotoxic T), CD3D (T cells), LYZ/CST3 (monocytes).
+Random Forest: **85.0% test accuracy** (5-fold CV: 81.6% ± 1.5%) on 10 PBMC cell types. Top features include known marker genes — CD79A (B cells), GNLY/NKG7 (NK/cytotoxic T), CD3D (T cells), LYZ/CST3 (monocytes).
 
 ![Confusion matrix](figures/part2_confusion_matrix.png)
 ![F1 scores](figures/part2_f1_scores.png)
