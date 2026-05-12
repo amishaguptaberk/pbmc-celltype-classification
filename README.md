@@ -1,18 +1,95 @@
-# BioE 145 Final Project
+# PBMC Cell Type Classification via scRNA-seq
 
-## Structure
-- `data/` — processed_counts.csv and labels.csv
-- `part1.ipynb` — Autoencoder + PCA/t-SNE visualizations
-- `part2.ipynb` — Cell type classifier
-- `requirements.txt` — Python dependencies
+![Python](https://img.shields.io/badge/Python-3.9+-blue?logo=python)
+![PyTorch](https://img.shields.io/badge/PyTorch-Autoencoder-red?logo=pytorch)
+![scikit-learn](https://img.shields.io/badge/scikit--learn-Classifier-orange?logo=scikit-learn)
+![License](https://img.shields.io/badge/License-MIT-green)
 
-## Setup
+Dimensionality reduction and cell type classification on 700 human PBMCs from
+single-cell RNA sequencing data, using autoencoders, PCA, t-SNE, and a Random Forest classifier.
+
+---
+
+## Overview
+
+PBMCs (Peripheral Blood Mononuclear Cells) include the major cell types of the adaptive
+immune system — T cells, B cells, NK cells, monocytes, and dendritic cells. scRNA-seq
+measures gene expression in individual cells, enabling single-cell resolution analysis of
+immune composition and state.
+
+This project applies unsupervised and supervised machine learning to a 700-cell,
+765-gene PBMC dataset to learn low-dimensional structure and classify cell types.
+
+---
+
+## Methods
+
+### Part 1 — Dimensionality Reduction
+
+| Method | Type | Key property |
+|--------|------|--------------|
+| PCA | Linear | Maximum variance directions |
+| t-SNE | Nonlinear | Preserves local neighborhood structure |
+| Autoencoder | Nonlinear (learned) | Reconstruction-optimized latent space |
+
+Autoencoder architecture: `765 → 512 → 256 → 128 → 32 → 128 → 256 → 512 → 765`
+Trained with MSE loss + L1 sparsity regularization, early stopping on validation loss.
+
+### Part 2 — Classification
+
+Random Forest (300 trees, balanced class weights) trained on raw expression features.
+Evaluated with per-class F1 score to account for class imbalance across 10 cell types.
+
+---
+
+## Results
+
+**Dimensionality Reduction**
+
+![Comparison](figures/part1_comparison.png)
+
+**Classification**
+
+![Confusion matrix](figures/part2_confusion_matrix.png)
+![F1 scores](figures/part2_f1_scores.png)
+
+---
+
+## Cell Types
+
+| Cell type | n |
+|-----------|---|
+| Dendritic | 240 |
+| CD14+ Monocyte | 129 |
+| CD19+ B | 95 |
+| CD4+/CD25 T Reg | 68 |
+| CD8+ Cytotoxic T | 54 |
+| CD8+/CD45RA+ Naive Cytotoxic | 43 |
+| CD56+ NK | 31 |
+| CD4+/CD45RO+ Memory | 19 |
+| CD34+ | 13 |
+| CD4+/CD45RA+/CD25- Naive T | 8 |
+
+---
+
+## Usage
+
 ```bash
+git clone https://github.com/amishaguptaberk/pbmc-celltype-classification
+cd pbmc-celltype-classification
 pip install -r requirements.txt
+# place labels.csv and processed_counts.csv in data/
 jupyter notebook
 ```
 
-## Data Notes
-- 700 cells × 765 genes (log-normalized scRNA-seq)
-- Label column: `bulk_labels` (not "cell type")
-- 10 PBMC cell types
+---
+
+## Background
+
+BioE 145/245: Machine Learning for Computational Biology, UC Berkeley, Spring 2026.
+Instructor: Professor Liana Lareau.
+
+---
+
+## License
+MIT
